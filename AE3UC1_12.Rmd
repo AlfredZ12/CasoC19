@@ -1,0 +1,91 @@
+---
+title: "AE3UC1_12"
+author: "* Jose Nunez, * Mario Alejandro Salcedo, Victor Manuel"
+date: "15/10/2021"
+output: 
+  html_document:
+    theme: cerulean
+    toc: true
+    toc_depth: 5
+    toc_float: 
+      collapsed: true
+      smoth_scroll: true
+    code_folding: "hide"
+    code_download: TRUE
+    highlight: "zenburn"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r}
+library(pacman) #para importar la biblioteca "pacman"
+p_load("base64enc", "htmltools", "mime", "xfun", "prettydoc","readr", "knitr","DT","dplyr", "ggplot2","plotly", "gganimate","gifski","scales","ggdark")
+```
+
+
+
+
+# Importacion de datos
+```{r }
+
+
+casos <- read.csv("docs/Casos_Diarios_Estado_Nacional_Confirmados_20211014.csv")
+
+Fecha <- seq(from = as.Date("2020-02-18"), to = as.Date("2021-10-14"), by = "day"   )
+
+Chihuahua <- casos[casos$nombre =="CHIHUAHUA",]
+
+Chihuahua <- t(Chihuahua)
+
+Chihuahua <- as.numeric(as.vector(Chihuahua[4:608]))
+
+
+ 
+Mexico <- casos[casos$nombre =="MEXICO",]
+
+Mexico <- t(Mexico)
+
+Mexico <- as.numeric(as.vector(Mexico[4:608]))
+
+
+
+
+Mexico.df <- data.frame(Fecha,Mexico)
+Chihuahua.df <- data.frame(Fecha,Chihuahua)
+
+
+```
+
+
+
+```{r}
+
+
+
+
+
+ gvoc <-ggplot(data = Mexico.df)+ 
+  geom_line(aes(Fecha, Mexico, colour="Mexico",)) +
+  geom_line(aes(Fecha, Chihuahua, colour="Chihuahua")) +
+
+  scale_color_manual(values =  c("cyan", "blue"))+
+  guides(color = guide_legend(title = "Estado"))+
+    
+  theme(legend.position = "bottom", plot.background = element_rect("gray"))+
+  labs(title = "Casos de Covid 19" )
+ 
+
+ggplotly(gvoc)
+
+```
+
+
+
+
+
+
+
+
