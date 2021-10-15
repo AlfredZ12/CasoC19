@@ -20,6 +20,12 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
+
+# Introduccion
+
+Coronavirus es una familia de 
+
+
 ```{r}
 library(pacman) #para importar la biblioteca "pacman"
 p_load("base64enc", "htmltools", "mime", "xfun", "prettydoc","readr", "knitr","DT","dplyr", "ggplot2","plotly", "gganimate","gifski","scales","ggdark")
@@ -31,30 +37,32 @@ p_load("base64enc", "htmltools", "mime", "xfun", "prettydoc","readr", "knitr","D
 # Importacion de datos
 ```{r }
 
+#se realiza la declaración de las variables que contendrán las url en donde se encuentran los datos crudos de confirmados, decesos, recuperados
 
-casos <- read.csv("docs/Casos_Diarios_Estado_Nacional_Confirmados_20211014.csv")
+url_conf <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv"
 
-Fecha <- seq(from = as.Date("2020-02-18"), to = as.Date("2021-10-14"), by = "day"   )
+url_decesos <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"
 
-Chihuahua <- casos[casos$nombre =="CHIHUAHUA",]
+url_recuperados <- "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"
 
-Chihuahua <- t(Chihuahua)
+#Leer los archivos .csv de las url 
 
-Chihuahua <- as.numeric(as.vector(Chihuahua[4:608]))
+datos_conf <- read.csv(url_conf)
+datos_decesos <- read.csv(url_decesos)
+datos_recuperados <- read.csv(url_recuperados)
 
+#definir variables 
 
- 
-Mexico <- casos[casos$nombre =="MEXICO",]
-
-Mexico <- t(Mexico)
-
-Mexico <- as.numeric(as.vector(Mexico[4:608]))
-
-
+conf_mex <- t(datos_conf[datos_conf$Country.Region=="Mexico" ,])
+dec_mex  <- t(datos_decesos[datos_decesos$Country.Region=="Mexico" ,])
+rec_mex  <- t(datos_recuperados[datos_recuperados$Country.Region=="Mexico" ,])
 
 
-Mexico.df <- data.frame(Fecha,Mexico)
-Chihuahua.df <- data.frame(Fecha,Chihuahua)
+#casos <- read.csv("docs/Casos_Diarios_Estado_Nacional_Confirmados_20211014.csv")
+
+Fecha <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-14"), by = "day"   )
+
+
 
 
 ```
@@ -65,22 +73,53 @@ Chihuahua.df <- data.frame(Fecha,Chihuahua)
 
 
 
+#casos confirmados 
+vec1 <- as.vector(conf_mex)
+vec2 <- vec1[5:636]
+num1 <- as.numeric(vec2)
+Confirmados <- as.vector(num1)
 
+#decesos 
+vec1 <- as.vector(dec_mex)
+vec2 <- vec1[5:636]
+num1 <- as.numeric(vec2)
+Decesos <- as.vector(num1)
 
- gvoc <-ggplot(data = Mexico.df)+ 
-  geom_line(aes(Fecha, Mexico, colour="Mexico",)) +
-  geom_line(aes(Fecha, Chihuahua, colour="Chihuahua")) +
+#recuperados
+vec1 <- as.vector(rec_mex)
+vec2 <- vec1[5:636]
+num1 <- as.numeric(vec2)
+Recuperados <- as.vector(num1)
 
-  scale_color_manual(values =  c("cyan", "blue"))+
-  guides(color = guide_legend(title = "Estado"))+
-    
-  theme(legend.position = "bottom", plot.background = element_rect("gray"))+
-  labs(title = "Casos de Covid 19" )
- 
+#generación de un marco de datos (data frame)
 
-ggplotly(gvoc)
+datos1 <- data.frame(Fecha, Confirmados, Decesos, Recuperados)
 
 ```
+
+
+```{r}
+gcov <- ggplot(data = datos1) +
+  geom_line(aes(Fecha, Confirmados, colour="Confirmados")) +
+  geom_line(aes(Fecha, Decesos, colour="Decesos")) +
+  geom_line(aes(Fecha, Recuperados, colour="Recuperados")) +
+  xlab("Fecha") +
+  ylab("COVID-19 en México") +
+  labs(colour="casos")+
+  ggtitle("Casos de COVID-19 en México (Fuente: JHU CSSE") +
+  scale_y_continuous(labels = comma)
+gcov
+```
+
+
+```{r}
+
+
+ggplotly(gcov)
+```
+
+
+
 
 
 
