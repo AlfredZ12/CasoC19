@@ -1,6 +1,6 @@
 ---
 title: "AE3UC1_12"
-author: "* Jose Nunez, * Mario Alejandro Salcedo, Victor Manuel"
+author: "* Jose Nunez, * Mario Alejandro Salcedo,* Victor Manuel"
 date: "15/10/2021"
 output: 
   html_document:
@@ -8,7 +8,7 @@ output:
     toc: true
     toc_depth: 5
     toc_float: 
-      collapsed: true
+      collapsed: false
       smoth_scroll: true
     code_folding: "hide"
     code_download: TRUE
@@ -21,9 +21,72 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-# Introduccion
+# I. Introduccion
 
-Coronavirus es una familia de 
+# II. Antecedentes
+
+# III. Teoria
+
+##  ¿Que és Coronavirus?
+
+El coronaviruses una familia de virus que causa enfermedades desde un resfriado común hasta enfermedades severas que requieren mayor atencion clinica similares  a las observadas en el sindondrome respiratorio por coronavirus de Medio Oriente __(MERS)__ y el Síndrome espiratorio agudo grave __(SARS)__.
+
+### Covid 19
+
+Coronavirus SARS-COV2. Es un virus Apareció en China en diciembre pasado y provoca una enfermedad llamada COVID-19, que se extendió por el mundo y fue declarada pandemia global por la Organización Mundial de la Salud.
+
+#### Sintomas
+
+Las personas con COVID-19 pueden presentar los siguientes signos y sintomas
+
+*  Tos, fiebre, dolor de cabeza
+*  Dolor de garganta
+*  Ojos rojos
+*  Dolores musculares o de articulaciones
+*  En casos graves se presentan dificultades para respirar o falta de aire en pulmones.
+
+
+#### ¿A quienes afecta mas?
+
+Afecta a todoas las personas, pero la siguiente corren mas riesgo
+
+* Personas de la 3ra edad
+
+* Mujeres con Embarazo
+
+* Personas con efermedades crónicas como: cáncer, diabetes, e hipertensión.
+
+
+#### Prevencion del COVID-19
+
+Para evitar el contagio puedes realizar las siguientes medidas:
+
+* Lavar manos usando jabón durante 20 segundos como minimo.
+
+* No tocarse los ojos, nariza o boca si tus manos no están limpias
+
+* Cubrir nariz y boca con el brazo o usar un pañuelo desechable al momento de estornudar o toser. Dbes tirar al la basura en una bolsa el pañuelo.
+
+* Mantener distancia entre las demas Personas 
+
+![](docs/Coronavirus Prevencion.png)
+
+
+
+##  Palabras Clave
+
+
+* **(MERS)**  es una enfermedad respiratoria contagiosa que puede ser fatal. Suele propagarse mediante el contacto directo con una persona infectada.
+Los síntomas incluyen fiebre, tos y dificultad para respirar. Otros síntomas son las náuseas, los vómitos y la diarrea.
+El tratamiento incluye reposo, ingesta de líquidos, analgésicos y, en casos severos, oxigenoterapia.
+
+
+
+* **SARS** El síndrome agudo respiratorio severo (SARS) es una neumonía muy grave, causada por un nuevo virus de la familia de los coronavirus. La enfermedad se extendió en 2003 a varios países del sudeste asiático, Europa y América del Norte y ha provocado alarma mundial debido al número de afectados y a que no se dispone de tratamiento ni vacuna aprobada.
+
+
+
+
 
 
 ```{r}
@@ -97,9 +160,19 @@ datos1 <- data.frame(Fecha, Confirmados, Decesos, Recuperados)
 
 ```
 
-* Se generan las Fechas por mes para realizar el grafico
 
-```{r}
+### Resultados {.tabset} 
+
+
+* **<div style="color: 'red' !important">!!Advertencia!!</div> , Toma en cuenta que al elegir la vista por día son demasiados datos**
+
+
+
+#### Por mes
+
+
+
+```{r, include=FALSE}
 
 # Sequencia por meses para escalar grafico.
 scala <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-15"), by = "month")
@@ -123,9 +196,83 @@ gcov
 ```
 
 
-
 ```{r}
 ggplotly(gcov, width = 850)
+```
+
+
+#### Por dia
+
+```{r , include=FALSE}
+
+
+gcov <- ggplot(data = datos1) +
+  geom_line(aes(Fecha, Confirmados, colour="Confirmados")) + 
+  geom_line(aes(Fecha, Decesos, colour="Decesos")) +
+  geom_line(aes(Fecha, Recuperados, colour="Recuperados")) + 
+  
+  xlab("Fecha") +
+  ylab("COVID-19 en México") +
+  labs(colour="casos")+
+  ggtitle("Casos de COVID-19 en México (Fuente: JHU CSSE)") +
+  scale_y_continuous(labels = comma) +
+scale_x_continuous(breaks = Fecha) +
+  theme(axis.text.x = element_text(angle = 65, hjust = 1)) 
+
+gcov
+
+```
+
+```{r}
+
+ggplotly(gcov, width = 1000,dynamicTicks = )
+
+```
+
+
+
+## Grafica Animada
+
+```{r}
+
+# Sequencia por meses para escalar grafico.
+
+
+
+gcov <- ggplot(data = datos1) +
+  geom_line(aes(Fecha, Confirmados, colour="Confirmados")) + 
+  geom_line(aes(Fecha, Decesos, colour="Decesos")) +
+  geom_line(aes(Fecha, Recuperados, colour="Recuperados")) + 
+ 
+   geom_point(aes(Fecha,Confirmados, colour="Confirmados")) + 
+ geom_point(aes(Fecha,Decesos, colour="Decesos")) + 
+  geom_point(aes(Fecha,Recuperados, colour="Recuperados")) +
+  
+  geom_text(aes(x = min(Fecha), y = min(Confirmados), label = as.factor(Fecha)) , hjust=-2, vjust = -0.2, alpha = 0.2,  col = "gray", size = 20) +
+  
+  xlab("Fecha") +
+  
+  ylab("COVID-19 en México") +
+  
+  labs(colour="Casos")+
+  
+  ggtitle("Casos de COVID-19 en México (Fuente: JHU CSSE)") +
+  
+  scale_y_continuous(labels = comma) +
+  
+  scale_x_continuous(breaks = scala) +
+  
+  theme(axis.text.x = element_text(angle = 65, hjust = 1)) +
+
+  
+  transition_reveal(Fecha) +
+  view_follow() +
+  ease_aes('cubic') 
+ 
+
+
+animate(gcov, fps=5)
+
 ```
 
 
@@ -134,6 +281,9 @@ ggplotly(gcov, width = 850)
 
 
 
+
+
+# 
 
 
 
