@@ -60,12 +60,12 @@ rec_mex  <- t(datos_recuperados[datos_recuperados$Country.Region=="Mexico" ,])
 
 #casos <- read.csv("docs/Casos_Diarios_Estado_Nacional_Confirmados_20211014.csv")
 
-Fecha <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-14"), by = "day"   )
+Fecha <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-15"), by = "day"   )
 
 
 
 
-```
+  ```
 
 
 
@@ -75,19 +75,19 @@ Fecha <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-14"), by = "day
 
 #casos confirmados 
 vec1 <- as.vector(conf_mex)
-vec2 <- vec1[5:636]
+vec2 <- vec1[5:637]
 num1 <- as.numeric(vec2)
 Confirmados <- as.vector(num1)
 
 #decesos 
 vec1 <- as.vector(dec_mex)
-vec2 <- vec1[5:636]
+vec2 <- vec1[5:637]
 num1 <- as.numeric(vec2)
 Decesos <- as.vector(num1)
 
 #recuperados
 vec1 <- as.vector(rec_mex)
-vec2 <- vec1[5:636]
+vec2 <- vec1[5:637]
 num1 <- as.numeric(vec2)
 Recuperados <- as.vector(num1)
 
@@ -97,25 +97,35 @@ datos1 <- data.frame(Fecha, Confirmados, Decesos, Recuperados)
 
 ```
 
+* Se generan las Fechas por mes para realizar el grafico
 
 ```{r}
+
+# Sequencia por meses para escalar grafico.
+scala <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-15"), by = "month")
+
+
 gcov <- ggplot(data = datos1) +
-  geom_line(aes(Fecha, Confirmados, colour="Confirmados")) +
+  geom_line(aes(Fecha, Confirmados, colour="Confirmados")) + 
   geom_line(aes(Fecha, Decesos, colour="Decesos")) +
-  geom_line(aes(Fecha, Recuperados, colour="Recuperados")) +
+  geom_line(aes(Fecha, Recuperados, colour="Recuperados")) + 
+  
   xlab("Fecha") +
   ylab("COVID-19 en México") +
   labs(colour="casos")+
-  ggtitle("Casos de COVID-19 en México (Fuente: JHU CSSE") +
-  scale_y_continuous(labels = comma)
+  ggtitle("Casos de COVID-19 en México (Fuente: JHU CSSE)") +
+  scale_y_continuous(labels = comma) +
+scale_x_continuous(breaks = scala) +
+  theme(axis.text.x = element_text(angle = 65, hjust = 1)) 
+
 gcov
+
 ```
 
 
+
 ```{r}
-
-
-ggplotly(gcov)
+ggplotly(gcov, width = 850)
 ```
 
 
