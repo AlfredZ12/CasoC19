@@ -3,16 +3,11 @@ title: "AE3UC1_12"
 author: "* Jose Nunez, * Mario Alejandro Salcedo,* Victor Manuel"
 date: "15/10/2021"
 output: 
-  html_document:
-    theme: cerulean
-    toc: true
-    toc_depth: 5
-    toc_float: 
-      collapsed: false
-      smoth_scroll: true
-    code_folding: "hide"
+  rmdformats::downcute:
+    highlight: tango
+    code_folding: hide
     code_download: TRUE
-    highlight: "zenburn"
+   
 ---
 
 ```{r setup, include=FALSE}
@@ -21,21 +16,21 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-# I. Introduccion
+# I. ___Introduccion___
 
-# II. Antecedentes
+# II. ___Antecedentes___
 
-# III. Teoria
+# III. ___Teoria___
 
-##  ¿Que és Coronavirus?
+##  ___¿Que és Coronavirus?___
 
 El coronaviruses una familia de virus que causa enfermedades desde un resfriado común hasta enfermedades severas que requieren mayor atencion clinica similares  a las observadas en el sindondrome respiratorio por coronavirus de Medio Oriente __(MERS)__ y el Síndrome espiratorio agudo grave __(SARS)__.
 
-### Covid 19
+### __Covid 19___
 
 Coronavirus SARS-COV2. Es un virus Apareció en China en diciembre pasado y provoca una enfermedad llamada COVID-19, que se extendió por el mundo y fue declarada pandemia global por la Organización Mundial de la Salud.
 
-#### Sintomas
+#### ___Sintomas___
 
 Las personas con COVID-19 pueden presentar los siguientes signos y sintomas
 
@@ -46,7 +41,7 @@ Las personas con COVID-19 pueden presentar los siguientes signos y sintomas
 *  En casos graves se presentan dificultades para respirar o falta de aire en pulmones.
 
 
-#### ¿A quienes afecta mas?
+#### ___¿A quienes afecta mas?___
 
 Afecta a todoas las personas, pero la siguiente corren mas riesgo
 
@@ -57,7 +52,7 @@ Afecta a todoas las personas, pero la siguiente corren mas riesgo
 * Personas con efermedades crónicas como: cáncer, diabetes, e hipertensión.
 
 
-#### Prevencion del COVID-19
+#### ___Prevencion del COVID-19___
 
 Para evitar el contagio puedes realizar las siguientes medidas:
 
@@ -128,7 +123,7 @@ Fecha <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-15"), by = "day
 
 
 
-  ```
+```
 
 
 
@@ -161,10 +156,12 @@ datos1 <- data.frame(Fecha, Confirmados, Decesos, Recuperados)
 ```
 
 
-### Resultados {.tabset} 
+### __Graficos__ {.tabset} 
 
 
-* **<div style="color: 'red' !important">!!Advertencia!!</div> , Toma en cuenta que al elegir la vista por día son demasiados datos**
+<span style="color: 'red '>
+*  **!!Advertencia!!, Toma en cuenta que al elegir la vista por día son demasiados datos**
+</span> 
 
 
 
@@ -201,7 +198,7 @@ ggplotly(gcov, width = 850)
 ```
 
 
-#### Por dia
+#### __Por dia__
 
 ```{r , include=FALSE}
 
@@ -231,7 +228,7 @@ ggplotly(gcov, width = 1000,dynamicTicks = )
 
 
 
-## Grafica Animada
+#### __Grafica Animada__
 
 ```{r}
 
@@ -263,27 +260,53 @@ gcov <- ggplot(data = datos1) +
   scale_x_continuous(breaks = scala) +
   
   theme(axis.text.x = element_text(angle = 65, hjust = 1)) +
-
-  
   transition_reveal(Fecha) +
   view_follow() +
-  ease_aes('cubic') 
+  ease_aes('linear') 
  
 
 
-animate(gcov, fps=5)
+animate(gcov,nframes= 500, duration=40)
 
 ```
 
 
 
+<!-- # Series de Tiempo -->
 
 
 
+```{r}
 
-
-
+# con.ts <- ts(Confirmados)
+# tempConfirmados=ts(datos1$Confirmados,start=c(2020,1) ,frequency = 7)
 # 
+# 
+# 
+# tempConfirmados
+# 
+# frame <- as.data.frame(x = tempConfirmados,y= Fecha)
+# 
+# plot(tempConfirmados)
+# 
+# tempoConfirmados.desc <-decompose(tempConfirmados)
+# 
+# 
+# plot(y=tempoConfirmados.desc, x = Fecha)
+# 
+# season <- tempoConfirmados.desc$seasonal
+# 
+# data <-  data.frame(season, Fecha)
+# 
+# 
+# gg <- ggplot(data= data) + 
+#   geom_line(aes(Fecha, data$`season`, colour="Confirmados"))
+# 
+# gg
+
+
+
+```
 
 
 
