@@ -18,41 +18,72 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # I. ___Introduccion___
 
+El coronavirus es una familia de virus que causa enfermedades desde un resfriado común
+hasta enfermedades severas que requieren mayor atención clínica similares a las
+observadas en el síndrome respiratorio por coronavirus de Medio Oriente (MERS) y el
+Síndrome respiratorio agudo grave (SARS).
+[Coronavirus](https://www.britannica.com/science/coronavirus-virus-group#ref1277304)
+
 # II. ___Antecedentes___
 
-# III. ___Teoria___
+Coronavirus SARS-COV-2, es un virus que apareció por primera vez en China en
+noviembre de 2019 y provoca una enfermedad llamada COVID-19, que se extendió por el
+mundo y fue declarada pandemia global por la Organización Mundial de la Salud.
+Esta enfermedad afecta principalmente a los siguientes grupos poblacionales:
 
-##  ___¿Que és Coronavirus?___
+* Personas de la tercera edad.
+* Personas con sobrepeso u obesidad.
+* Personas con enfermedades crónicas como: cáncer, diabetes, e hipertensión.
+* Mujeres con embarazo.
 
-El coronaviruses una familia de virus que causa enfermedades desde un resfriado común hasta enfermedades severas que requieren mayor atencion clinica similares  a las observadas en el sindondrome respiratorio por coronavirus de Medio Oriente __(MERS)__ y el Síndrome espiratorio agudo grave __(SARS)__.
+La Organización Mundial de la Salud recomienda como medidas para la reducción de
+contagios:
+* Evitar lugares aglomerados (transporte público, centros de
+convenciones/deportivos, supermercados, etc).
+* Mantener medidas sanitarias (lavado de manos, uso de cubrebocas, evitar el
+contacto con personas contagiadas, etc).
 
-### __Covid 19___
+[World Health Organizatio](https://www.who.int/es/emergencies/diseases/novel-coronavirus-2019/advice-for-public)
 
-Coronavirus SARS-COV2. Es un virus Apareció en China en diciembre pasado y provoca una enfermedad llamada COVID-19, que se extendió por el mundo y fue declarada pandemia global por la Organización Mundial de la Salud.
+El periodo de pandemia a nivel federal en México dio comienzo con la jornada de “Sana
+Distancia” el 23 de marzo, como punto de comparación la Organización Mundial de la
+Salud declaró el brote una emergencia de salud pública de importancia internacional el 30
+de enero de 2020 y una pandemia el 11 de marzo de 2020.
 
-#### ___Sintomas___
+[Cronología de la pandemia en México](https://www.eleconomista.com.mx/politica/Cronologia-de-la-pandemia-en-Mexico20210301-0045.html)
+* En México residen 15.4 millones de personas de 60 años o más y el 69.4%
+presentan algún tipo de discapacidad.
+* México ocupa el segundo lugar de prevalencia mundial de obesidad en la
+población adulta; De la población de 5 a 11 años, 18% tiene sobrepeso y va en
+incremento conforme aumenta la edad; 21% de los hombres de 12 a 19 años y
+27% de las mujeres de la misma edad, presentan sobrepeso. En la población de
+20 años o más, los hombres (42%) reportan una prevalencia más alta que las
+mujeres (37%).
+* Se estima que el 70.3% de la población adulta en México vive con al menos un
+factor de riesgo cardiovascular.
 
-Las personas con COVID-19 pueden presentar los siguientes signos y sintomas
+[Obesidad en México](https://www.inegi.org.mx/contenidos/saladeprensa/aproposito/2020/EAP_Obesidad20.pdf)
+[Riesgo cardiovascular en México](https://asociacionale.org.mx/enfermedades-cardiovasculares-principal-causa-demuerte-entre-los-mexicanos/)
 
-*  Tos, fiebre, dolor de cabeza
-*  Dolor de garganta
-*  Ojos rojos
-*  Dolores musculares o de articulaciones
-*  En casos graves se presentan dificultades para respirar o falta de aire en pulmones.
+## __Factores a considerar__
+En México el 80% de la población utilizaba de manera frecuente cómo método de
+transporte el sistema público, cerca del 40% lo utiliza como único método de transporte,
+este número bajó de forma significativa con el inicio de la pandemia.
+La densidad poblacional en México varía de gran manera de estado a estado, por ejemplo
+la densidad de población es de 6163.3 habitantes por kilómetro cuadrado en la capital del
+país, y contrasta con la media nacional de 64.3 habitantes por kilómetro cuadrado.
 
+[Transporte público](https://www.eleconomista.com.mx/arteseideas/Urge-el-rescate-del-transporte-publico-tras-los-impactos-de-la-pandemia-20210627-0075.html)
 
-#### ___¿A quienes afecta mas?___
-
-Afecta a todoas las personas, pero la siguiente corren mas riesgo
-
-* Personas de la 3ra edad
-
-* Mujeres con Embarazo
-
-* Personas con efermedades crónicas como: cáncer, diabetes, e hipertensión.
+[Transporte público](https://www.dgcs.unam.mx/boletin/bdboletin/2017_384.html)
+[Población](https://www.inegi.org.mx/contenidos/saladeprensa/boletines/2021/EstSociode
+mo/ResultCenso2020_CdMx.pdf)
 
 
-#### ___Prevencion del COVID-19___
+
+
+
+## ___Prevencion del COVID-19___
 
 Para evitar el contagio puedes realizar las siguientes medidas:
 
@@ -159,13 +190,13 @@ datos1 <- data.frame(Fecha, Confirmados, Decesos, Recuperados)
 ### __Graficos__ {.tabset} 
 
 
-<span style="color: 'red '>
+<span style="color: 'red' !important">
 *  **!!Advertencia!!, Toma en cuenta que al elegir la vista por día son demasiados datos**
 </span> 
 
 
 
-#### Por mes
+#### ___Por mes___
 
 
 
@@ -308,6 +339,36 @@ animate(gcov,nframes= 500, duration=40)
 
 ```
 
+
+# Referencias 
+
+
+
+Encyclopedia Britannica. (s. f.). coronavirus | Definition, Features, & Examples.
+Recuperado 17 de octubre de 2021, de
+https://www.britannica.com/science/coronavirus-virus-group#ref1277304
+
+Toche, N. (2021, 28 junio). Urge el rescate del transporte público tras los impactos de la
+pandemia. El Economista. Recuperado 17 de octubre de 2021, de
+https://www.eleconomista.com.mx/arteseideas/Urge-el-rescate-del-transporte-publico-traslos-impactos-de-la-pandemia-20210627-0075.html
+
+WHO. (s. f.). Orientaciones para el público. World Health Organization. Recuperado 17 de
+octubre de 2021, de
+https://www.who.int/es/emergencies/diseases/novel-coronavirus-2019/advice-for-public
+
+Suárez Lastra, M. (2017, 1 junio). En México 80% de los traslados se hacen en transporte
+público. Boletín UNAM-DGCS. Recuperado 17 de octubre de 2021, de
+https://www.dgcs.unam.mx/boletin/bdboletin/2017_384.html
+
+Enfermedades Cardiovasculares, principal causa de muerte entre los mexicanos. (s. f.).
+Asociación Ale. Recuperado 17 de octubre de 2021, de
+https://asociacionale.org.mx/enfermedades-cardiovasculares-principal-causa-de-muerte-e
+ntre-los-mexicanos/
+
+Cronología de la pandemia en México. (2021, 2 marzo). El Economista. Recuperado 17 de
+octubre de 2021, de
+https://www.eleconomista.com.mx/politica/Cronologia-de-la-pandemia-en-Mexico-2021030
+1-0045.html
 
 
 
