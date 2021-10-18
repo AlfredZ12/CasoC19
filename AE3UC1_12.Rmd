@@ -11,7 +11,7 @@ output:
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE)
 ```
 
 
@@ -23,6 +23,10 @@ hasta enfermedades severas que requieren mayor atención clínica similares a la
 observadas en el síndrome respiratorio por coronavirus de Medio Oriente (MERS) y el
 Síndrome respiratorio agudo grave (SARS).
 [Coronavirus](https://www.britannica.com/science/coronavirus-virus-group#ref1277304)
+
+![](https://www.isglobal.org/documents/10179/7759027/Coronavirus+SARS-CoV-2+de+CDC+en+Unsplash/6e5e7633-4ed9-484b-a95f-34195e55e142?t=1584534061000)
+
+
 
 # II. ___Antecedentes___
 
@@ -438,7 +442,7 @@ conf <- ggplot(data) +
   
 ```
 
-```{r}
+```{r }
 conf
 ```
 
