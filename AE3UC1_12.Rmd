@@ -1,5 +1,5 @@
 ---
-title: "AE3UC1_12"
+title: "AE3UC1_11"
 author: "* Jose Nunez, * Mario Alejandro Salcedo,* Victor Manuel"
 date: "15/10/2021"
 output: 
@@ -110,20 +110,41 @@ El tratamiento incluye reposo, ingesta de líquidos, analgésicos y, en casos se
 
 * **SARS** El síndrome agudo respiratorio severo (SARS) es una neumonía muy grave, causada por un nuevo virus de la familia de los coronavirus. La enfermedad se extendió en 2003 a varios países del sudeste asiático, Europa y América del Norte y ha provocado alarma mundial debido al número de afectados y a que no se dispone de tratamiento ni vacuna aprobada.
 
+# III. __OBJETIVO__
+
+El objetivo de nuestro estudio se basa en un análisis acerca de la variación
+de los picos de contagio en una serie de tiempo para así determinar su comportamiento
+y conocer mejor su conducta.
 
 
+# IV. __METODOLOGÍA__
 
+Estadística Descriptiva
 
+> La estadística descriptiva es una disciplina que se encarga de recoger, 
+almacenar, ordenar, realizar tablas o gráficos y calcular parámetros básicos 
+sobre el conjunto de datos.
 
-```{r}
+# V. __Resultados__
+
+## Importamos los datos 
+
+De los siguientes enlaces puedes usar los datos, para realizar la comprobacion sobre este este analisis, o bien en la parte inicial al lado derecho se encuentra el Archivo .Rmd.
+
+* [Casos Confirmados](https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_confirmed_global.csv)
+
+* [Recuperados](https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv)
+
+* [Decesos](https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv)
+
+```{r importacion de librerias}
 library(pacman) #para importar la biblioteca "pacman"
-p_load("base64enc", "htmltools", "mime", "xfun", "prettydoc","readr", "knitr","DT","dplyr", "ggplot2","plotly", "gganimate","gifski","scales","ggdark")
+p_load("base64enc", "htmltools", "mime", "xfun", "prettydoc","readr", "knitr","DT","dplyr", "ggplot2","plotly", "gganimate","gifski","scales","ggdark","xts")
 ```
 
 
 
 
-# Importacion de datos
 ```{r }
 
 #se realiza la declaración de las variables que contendrán las url en donde se encuentran los datos crudos de confirmados, decesos, recuperados
@@ -149,7 +170,7 @@ rec_mex  <- t(datos_recuperados[datos_recuperados$Country.Region=="Mexico" ,])
 
 #casos <- read.csv("docs/Casos_Diarios_Estado_Nacional_Confirmados_20211014.csv")
 
-Fecha <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-15"), by = "day"   )
+Fecha <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-16"), by = "day"   )
 
 
 
@@ -164,19 +185,19 @@ Fecha <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-15"), by = "day
 
 #casos confirmados 
 vec1 <- as.vector(conf_mex)
-vec2 <- vec1[5:637]
+vec2 <- vec1[5:638]
 num1 <- as.numeric(vec2)
 Confirmados <- as.vector(num1)
 
 #decesos 
 vec1 <- as.vector(dec_mex)
-vec2 <- vec1[5:637]
+vec2 <- vec1[5:638]
 num1 <- as.numeric(vec2)
 Decesos <- as.vector(num1)
 
 #recuperados
 vec1 <- as.vector(rec_mex)
-vec2 <- vec1[5:637]
+vec2 <- vec1[5:638]
 num1 <- as.numeric(vec2)
 Recuperados <- as.vector(num1)
 
@@ -184,26 +205,33 @@ Recuperados <- as.vector(num1)
 
 datos1 <- data.frame(Fecha, Confirmados, Decesos, Recuperados)
 
+
+
 ```
+
+## Series de tiempo
+
+Por serie de tiempo nos referimos a datos estadísticos que se recopilan, observan o registran
+en intervalos de tiempo regulares (diario, semanal, semestral, anual, entre otros). El termino se aplica a datos que se registran de forma periodica que en este caso muestran diariamente y mensualmente en los siguientes graficos.
 
 
 ### __Graficos__ {.tabset} 
 
 
-<span style="color: 'red' !important">
-*  **!!Advertencia!!, Toma en cuenta que al elegir la vista por día son demasiados datos**
-</span> 
+
+*  <span style="color: red">**!!Advertencia!!,</span> Toma en cuenta que al elegir la vista por día son demasiados datos**
 
 
 
-#### ___Por mes___
+
+#### __Por mes__
 
 
 
 ```{r, include=FALSE}
 
 # Sequencia por meses para escalar grafico.
-scala <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-15"), by = "month")
+scala <- seq(from = as.Date("2020-01-22"), to = as.Date("2021-10-16"), by = "month")
 
 
 gcov <- ggplot(data = datos1) +
@@ -301,43 +329,131 @@ animate(gcov,nframes= 500, duration=40)
 
 ```
 
+### Descomposición 
 
-
-<!-- # Series de Tiempo -->
-
-
+* Filtramos los datos de acuerdo al ultimo dia del mes
 
 ```{r}
 
-# con.ts <- ts(Confirmados)
-# tempConfirmados=ts(datos1$Confirmados,start=c(2020,1) ,frequency = 7)
-# 
-# 
-# 
-# tempConfirmados
-# 
-# frame <- as.data.frame(x = tempConfirmados,y= Fecha)
-# 
-# plot(tempConfirmados)
-# 
-# tempoConfirmados.desc <-decompose(tempConfirmados)
-# 
-# 
-# plot(y=tempoConfirmados.desc, x = Fecha)
-# 
-# season <- tempoConfirmados.desc$seasonal
-# 
-# data <-  data.frame(season, Fecha)
-# 
-# 
-# gg <- ggplot(data= data) + 
-#   geom_line(aes(Fecha, data$`season`, colour="Confirmados"))
-# 
-# gg
+
+datosFiltrados <-  datos1 %>%
+filter( Fecha == as.Date("2020-01-31") |
+        Fecha == as.Date("2020-02-28") |
+        Fecha == as.Date("2020-03-31") |
+        Fecha == as.Date("2020-04-30") |
+        Fecha == as.Date("2020-05-31") |
+        Fecha == as.Date("2020-06-30") |
+        Fecha == as.Date("2020-07-31") |
+        Fecha == as.Date("2020-08-30") |
+        Fecha == as.Date("2020-09-30") |
+        Fecha == as.Date("2020-10-31") |
+        Fecha == as.Date("2020-11-30") |
+        Fecha == as.Date("2020-12-31") |
+        Fecha == as.Date("2021-01-31") |
+        Fecha == as.Date("2021-02-28") |
+        Fecha == as.Date("2021-03-31") |
+        Fecha == as.Date("2021-04-30") |
+        Fecha == as.Date("2021-05-31") |
+        Fecha == as.Date("2021-06-30") |
+        Fecha == as.Date("2021-07-31") |
+        Fecha == as.Date("2021-08-30") |
+        Fecha == as.Date("2021-09-30") |
+        Fecha == as.Date("2021-10-31") |
+        Fecha == as.Date("2021-11-30") |
+        Fecha == as.Date("2021-12-31")   )
+  
+
+
+  
+ 
+
+  Confirmados.ts<-ts(datosFiltrados$Confirmados, start= as.Date("2020-01-22"), freq=12)
+  Decesos.ts<-ts(datosFiltrados$Decesos, start= as.Date("2020-01-22"), freq=12)
+  Recuperados.ts<-ts(datosFiltrados$Recuperados, start= as.Date("2020-01-22"), freq=12)
 
 
 
 ```
+
+
+
+__Decomposicion__ Es el proceso de identificar y calcular las diversas componentes existentes en una serie así como la forma en que estas se relacionan entre sí.
+Se adecua cuando se obtienen 2 o mas periodos de 12 meses para poder identificar la tendecia.
+
+
+
+* Graficos de Caja y Bigote
+
+```{r}
+boxplot(Confirmados.ts ~ cycle(Confirmados.ts))
+```
+
+```{r}
+boxplot(Recuperados.ts ~ cycle(Recuperados.ts))
+```
+```{r}
+boxplot( Decesos.ts ~ cycle(Decesos.ts))
+```
+
+ Se muestra graficamente lo explicado anteriormente sobre los periodos, en este caso no se completan 2 periodos _(2 anios)_ para realizar la descomposicion y comprobamos con los graficos de caja y bigote. A simple vista se observa que no se culminan los Meses de: Octubre, Noviembre, y Diciembre.
+
+
+* Eliminacion de Tendencia
+
+```{r}
+
+
+x <- log(Confirmados.ts)
+
+Confirmados.diff <- diff(x)
+
+x <- log(Recuperados.ts)
+
+Recuperados.diff <- diff(x)
+
+x <- log(Decesos.ts)
+
+Decesos.diff <- diff(x)
+
+
+data <- data.frame(Recuperados.diff, Confirmados.diff,Decesos.diff,scala[1:20])
+
+
+data
+conf <- ggplot(data) +
+  geom_line(aes(scala[1:20] ,data$`Confirmados.diff`, colour="Confirmados" ))+
+  geom_point(aes(scala[1:20] ,data$`Confirmados.diff`, colour="Confirmados" ))
+
+
+ Rec<- ggplot(data) +
+  geom_line(aes(scala[1:20] ,data$`Recuperados.diff`, colour="Recuperados"))+
+  geom_point(aes(scala[1:20] ,data$`Recuperados.diff`, colour="Recuperados")) 
+    
+ Dec <-   ggplot(data) +
+     geom_line(aes(scala[1:20] ,data$`Decesos.diff`, colour="Decesos"))+
+  geom_point(aes(scala[1:20] ,data$`Decesos.diff`, colour="Decesos")) 
+     
+     
+     
+  
+```
+
+```{r}
+conf
+```
+
+
+```{r}
+Rec
+```
+
+```{r}
+Dec
+```
+
+
+
+
 
 
 # Referencias 
